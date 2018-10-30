@@ -4,6 +4,16 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var expressValidator = require('express-validator');
+
+
+// Authentication Packages
+var session = require('express-session');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var MySQLStore = require('express-mysql-session')(session);
+var bcrypt = require('bcrypt');
+
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -21,11 +31,64 @@ app.set('view engine', 'hbs');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(expressValidator());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//storing the session in the database
+var options = {
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database : process.env.DB_NAME
+};
+
+var sessionStore = new MySQLStore(options);
+
+app.use(session({
+  secret: 'fa6737b131bf59613f73afc6416d4ee6',
+  resave: false,
+  store: sessionStore,
+  saveUninitialized: false,
+  //cookie: { secure: true } //uncomment if it is https
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+//authentication for the hbs
+app.use((req,res,next)=>{
+  if(req.isAuthenticated) res.locals.isAuthenticated = req.isAuthenticated();
+  next();
+});
+
 app.use('/', index);
 app.use('/users', users);
+
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+   //console.log(username);
+   //console.log(password);
+   const db = require('./db');
+
+   db.query('SELECT id, password FROM users WHERE username = ?',[username], (err,results,fields)=>{
+      if(err){done(err);}
+      if(results.length === 0){done(null,false);} 
+      else{
+        //console.log(results[0].password.toString());
+        const hash = results[0].password.toString();
+  
+        bcrypt.compare(password, hash, (err,response)=>{
+          if (response == true){
+            return done(null, {user_id:results[0].id}); 
+          }
+          else{
+            return done(null,false);
+          }
+        });
+      }
+  });
+  }
+));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

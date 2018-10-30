@@ -6,30 +6,36 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
-    "body-parser": "~1.15.2",
+    "bcrypt": "^3.0.1",
+    "body-parser": "^1.18.3",
     "cookie-parser": "~1.4.3",
-    "debug": "~2.2.0",
-    "express": "~4.14.0",
+    "debug": "^4.1.0",
+    "express": "^4.16.4",
+    "express-mysql-session": "^2.0.1",
+    "express-session": "^1.15.6",
+    "express-validator": "^5.3.0",
     "hbs": "~4.0.1",
-    "morgan": "~1.7.0",
-    "mysql": "^2.13.0",
-    "serve-favicon": "~2.3.0"
+    "morgan": "^1.9.1",
+    "mysql": "^2.16.0",
+    "node-sass": "^4.9.3",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "serve-favicon": "^2.5.0"
   },
   "devDependencies": {
-    "babel-core": "^6.24.1",
-    "babel-loader": "^7.0.0",
-    "babel-preset-env": "^1.4.0",
-    "browser-sync": "^2.18.8",
-    "browser-sync-webpack-plugin": "^1.1.4",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
+    "browser-sync": "^2.26.0",
+    "browser-sync-webpack-plugin": "^1.2.0",
     "chai": "^3.5.0",
     "css-loader": "^0.25.0",
-    "extract-text-webpack-plugin": "^2.1.0",
-    "mocha": "^3.4.1",
-    "node-sass": "^3.13.0",
+    "extract-text-webpack-plugin": "^2.1.2",
+    "mocha": "^5.2.0",
     "postcss-loader": "^1.1.1",
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",
-    "webpack": "^2.2.0",
-    "webpack-dotenv-plugin": "^2.0.0"
+    "webpack": "^2.7.0",
+    "webpack-dotenv-plugin": "^2.1.0"
   }
 }

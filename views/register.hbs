@@ -1,0 +1,34 @@
+{{> header }}
+
+
+    <h1>{{title}}</h1>
+
+    {{#if errors}}
+    {{#each errors}}
+    <div class="alert alert-danger">
+      {{this.msg}}
+    </div>
+    {{/each}}
+    {{/if}}
+
+    <form action="/register" method="POST">
+        <div class="form-group">
+            <label for="username" class="col-sm-2 col-form-label">Username</label>
+            <input type="text" name="username" class="form-control" placeholder="Username">
+            </div>
+              <div class="form-group">
+            <label for="email" class="col-sm-2 col-form-label">Email</label>
+            <input type="email" name="email" class="form-control" placeholder="Email">
+            </div>
+              <div class="form-group">
+            <label for="password" class="col-sm-2 col-form-label">Password</label>
+            <input type="password" name="password" class="form-control" placeholder="Password">
+            </div>
+              <div class="form-group">
+            <label for="passwordMath" class="col-sm-2 col-form-label">Re-Enter Password</label>
+            <input type="password" name="passwordMatch" class="form-control" placeholder="Re-Enter Password">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+
+{{> footer-end }}
