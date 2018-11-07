@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var expressValidator = require('express-validator');
+var flash = require('express-flash');
 
 
 // Authentication Packages
@@ -54,6 +55,8 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use(flash());
 
 //authentication for the hbs
 app.use((req,res,next)=>{
