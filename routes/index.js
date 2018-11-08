@@ -216,7 +216,7 @@ router.post('/register', function (req, res, next) {
 
     bcrypt.hash(password, saltRounds, function (err, hash) {
       // Store hash in your password DB.
-      let sql = "INSERT INTO users(username,email,password) VALUES (?,?,?)";
+      let sql = "INSERT INTO users(username,email,password,regdate) VALUES (?,?,?,NOW())";
       db.query(sql, [username, email, hash], (error, result, fields) => {
         if (error) throw error;
 
